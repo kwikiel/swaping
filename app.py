@@ -1,6 +1,6 @@
 #Import flask
 from flask import Flask
-from flask import render_template, request
+from flask import render_template, request, make_response
 from flask.ext.sqlalchemy import SQLAlchemy
 import hashlib
 
@@ -64,7 +64,19 @@ def display(special):
     balance = str(yolo.get_balance())
     interest = str(yolo.get_cutoff())
     positions = yolo.swap_list()
+    #Setting cookie
+
     return render_template("display.html", balance=balance, interest=interest, positions=positions)
 
+
+@app.route('/make_best/<special>')
+def create(special):
+
+    record = Keys.query.filter(Keys.url == special).first()
+    #Class initialisation for bitmarket API
+    yolo = Yolo(record.public_key, record.private_key)
+    yolo.make_best()
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
