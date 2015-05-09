@@ -48,7 +48,8 @@ def handle():
             keys = Keys(request.form['pubkey'], request.form['privkey'])
             db.session.add(keys)
             db.session.commit()
-            return hashlib.sha256('{public_key}{private_key}lol'.format(public_key=request.form['pubkey'], private_key=request.form['privkey'])).hexdigest()
+            hashed_key = hashlib.sha256('{public_key}{private_key}lol'.format(public_key=request.form['pubkey'], private_key=request.form['privkey'])).hexdigest()
+            return render_template("generated.html", hashed_key=hashed_key)
         else:
             return "Something wrong with data"
     else:
@@ -59,8 +60,9 @@ def display(special):
     #Query database for keys
     record = Keys.query.filter(Keys.url == special).first()
     #Class initialisation for bitmarket API
-    xD
-    return render_template("display.html", record=record)
+    yolo = Yolo(record.public_key, record.private_key)
+    balance = str(yolo.get_balance())
+    return render_template("display.html", balance=balance)
 
 if __name__ == '__main__':
     app.run(debug=True)
