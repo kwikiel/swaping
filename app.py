@@ -62,7 +62,9 @@ def display(special):
     #Class initialisation for bitmarket API
     yolo = Yolo(record.public_key, record.private_key)
     balance = str(yolo.get_balance())
-    return render_template("display.html", balance=balance)
+    interest = str(yolo.get_cutoff())
+    positions = yolo.swap_list()
+    return render_template("display.html", balance=balance, interest=interest, positions=positions)
 
 if __name__ == '__main__':
     app.run(debug=True)

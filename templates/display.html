@@ -1,1 +1,38 @@
-{{ balance }}
+{% extends "base.html" %}
+{% block content %}
+<div class="card green darken-3">
+    <div class="card-content white-text">
+        <span class="card-title">Balance</span>
+        <p>{{ balance }} <b>BTC</b></p>
+    </div>
+    <div class="card-action">
+              <a href="#"></a>
+    </div>
+</div>
+
+
+<div class="card green darken-3">
+    <div class="card-content white-text">
+        <span class="card-title">Current interest</span>
+        <p>{{ interest }} <b>%</b></p>
+    </div>
+    <div class="card-action">
+              <a href="#"></a>
+    </div>
+</div>
+
+
+<div class="card green darken-3">
+    <div class="card-content white-text">
+        <span class="card-title">Open positions</span>
+        {% for pos in positions %}
+        <p>{{ pos['amount'] }} BTC</p><br>
+        <p>{{ pos['rate'] }} % </p><br>
+        <p>{{ pos['earnings'] }} earned </p><br>
+  {% endfor %}
+    </div>
+    <div class="card-action">
+              <a href="#"></a>
+    </div>
+</div>
+{% endblock %}

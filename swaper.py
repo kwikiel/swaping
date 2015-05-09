@@ -27,8 +27,8 @@ class Yolo():
             })
 
         post = urllib.urlencode(params)
-        sign = hmac.HMAC(self.secret, post, digestmod=hashlib.sha512).hexdigest()
-        headers = {"API-Key": self.key, "API-Hash": sign}
+        sign = hmac.HMAC(str(self.secret), post, digestmod=hashlib.sha512).hexdigest()
+        headers = {"API-Key": str(self.key), "API-Hash": sign}
         raw = requests.post(endpoint, data=post, headers=headers)
 
         if 'error' in raw.json():
