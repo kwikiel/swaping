@@ -3,7 +3,7 @@ from flask import Flask
 from flask import render_template, request, make_response
 from flask.ext.sqlalchemy import SQLAlchemy
 import hashlib
-
+import os.path
 #Library for bitmarket
 from swaper import *
 
@@ -79,4 +79,8 @@ def create(special):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    if os.path.isfile("test.db"):
+        app.run(host='0.0.0.0', port=5000)
+    else:
+        db.create_all()
+        app.run(host='0.0.0.0', port=5000)
