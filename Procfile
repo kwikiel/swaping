@@ -1,2 +1,2 @@
 web: python app.py
-db: python dbinit.py
+database: python dbinit.py
