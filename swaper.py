@@ -44,15 +44,15 @@ class Yolo():
 
     def cancel_all(self):
         """Powerful: cancels all open swaps """
-        swap_list = bitapi("swapList")["data"]
+        swap_list = self.bitapi("swapList")["data"]
 
         for swap in swap_list:
-            bitapi("swapClose", id=swap["id"])
+            self.bitapi("swapClose", id=swap["id"])
 
 
     def make_best(self):
         # Uses magic contant, remove later.
-        return self.bitapi('swapOpen', amount=(float(get_balance())-0.01), rate=float(get_cutoff()-0.05))
+        return self.bitapi('swapOpen', amount=(float(self.get_balance())-0.01), rate=float(self.get_cutoff()-0.05))
 
 
     def swap_list(self):

@@ -66,8 +66,9 @@ def display(special):
     positions = yolo.swap_list()
     #Setting cookie
 
-    return render_template("display.html", balance=balance, interest=interest, positions=positions)
-
+    rsp = make_response(render_template("display.html", balance=balance, interest=interest, positions=positions))
+    rsp.set_cookie('key', 'value')
+    return rsp
 
 @app.route('/make_best/<special>')
 def create(special):
@@ -75,8 +76,9 @@ def create(special):
     record = Keys.query.filter(Keys.url == special).first()
     #Class initialisation for bitmarket API
     yolo = Yolo(record.public_key, record.private_key)
+    yolo.cancel_all()
     yolo.make_best()
-
+    return "Made best offer!"
 
 if __name__ == '__main__':
     if os.path.isfile("test.db"):
