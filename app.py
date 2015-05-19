@@ -21,8 +21,8 @@ class Keys(db.Model):
     url = db.Column(db.String(256), unique=True)
 
     def __init__(self, public_key, private_key):
-        self.public_key = public_key
-        self.private_key = private_key
+        self.public_key = public_key.encode('utf8')
+        self.private_key = private_key.encode('utf8')
         self.url = hashlib.sha256('{0.public_key}{0.private_key}lol'.format(self)).hexdigest()
 
     def __repr__(self):
@@ -65,8 +65,9 @@ def display(special):
     interest = str(yolo.get_cutoff())
     positions = yolo.swap_list()
     #Setting cookie
-
-    rsp = make_response(render_template("display.html", balance=balance, interest=interest, positions=positions))
+    #cutoff level
+    cut = yolo.get_cutoff()
+    rsp = make_response(render_template("display.html", balance=balance, interest=interest, positions=positions, cut=cut))
     rsp.set_cookie('key', 'value')
     return rsp
 
@@ -93,4 +94,4 @@ if __name__ == '__main__':
         app.run(host='0.0.0.0', port=5000, debug=True)
     else:
         db.create_all()
-        app.run(host='0.0.0.0', port=5000)
+        app.run(host='0.0.0.0', port=5000, debug=True)

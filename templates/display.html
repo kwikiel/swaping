@@ -11,7 +11,13 @@
 </div>
 
 
-<div class="card green darken-3">
+<div class="card
+  {% if interest > cut -%}
+  red
+  {%- else -%}
+  yellow
+  {%- endif %}
+  ">
     <div class="card-content white-text">
         <span class="card-title">Current interest</span>
         <p>{{ interest }} <b>%</b></p>
