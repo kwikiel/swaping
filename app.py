@@ -62,7 +62,6 @@ def display(special):
     #Class initialisation for bitmarket API
     yolo = Yolo(record.public_key, record.private_key)
     balance = str(yolo.get_balance())
-    interest = Yolo()
     positions = yolo.swap_list()
     #Setting cookie
     #cutoff level
@@ -91,7 +90,7 @@ def cookie_insertion():
 
 if __name__ == '__main__':
     if os.path.isfile("test.db"):
-        app.run(host='0.0.0.0', port=5000)
+        app.run(host='0.0.0.0', port=5000, debug=True)
     else:
         db.create_all()
-        app.run(host='0.0.0.0', port=5000)
+        app.run(host='0.0.0.0', port=5000, debug=True)
