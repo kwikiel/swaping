@@ -67,7 +67,7 @@ def display(special):
     #Setting cookie
     #cutoff level
     cut = yolo.get_cutoff()
-    rsp = make_response(render_template("display.html", balance=balance, interest=interest, positions=positions, cut=cut))
+    rsp = make_response(render_template("display.html", balance=balance, interest=interest, positions=positions, cut=cut, special=special))
     rsp.set_cookie('key', 'value')
     return rsp
 
@@ -91,7 +91,7 @@ def cookie_insertion():
 
 if __name__ == '__main__':
     if os.path.isfile("test.db"):
-        app.run(host='0.0.0.0', port=5000, debug=True)
+        app.run(host='0.0.0.0', port=5000)
     else:
         db.create_all()
-        app.run(host='0.0.0.0', port=5000, debug=True)
+        app.run(host='0.0.0.0', port=5000)
