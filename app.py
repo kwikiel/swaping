@@ -6,8 +6,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import hashlib
 import os.path
 # Library for bitmarket
-from swaping import Yolo
-from swaping import interest
+from swaper import Yolo
+from swaper import interest
 # Make app instance
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
