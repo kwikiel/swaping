@@ -4,12 +4,13 @@ from flask import render_template, request, make_response, redirect
 from flask import current_app
 from flask.ext.sqlalchemy import SQLAlchemy
 import hashlib
-import os.path
 # Library for bitmarket
 from swaper import Yolo
 # Make app instance
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] =\
+    'postgres://zwnlkqhnfyaxnh:GFkT10cJtu6REr91W_Xlj7ePMF@ec2-107-22-170-249\
+.compute-1.amazonaws.com:5432/dfe8besv4oq9ol'
 db = SQLAlchemy(app)
 
 
@@ -72,7 +73,6 @@ def display(special):
     cut = yolo.get_cutoff()
     rsp = make_response(render_template("display.html",
                         balance=balance,
-                        interest=interest,
                         positions=positions,
                         cut=cut,
                         special=special))
