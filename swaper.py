@@ -10,6 +10,7 @@ import config
 class BitapiException(Exception):
     pass
 
+
 class Yolo():
 
     def __init__(self, key=config.key, secret=config.secret):
@@ -27,7 +28,8 @@ class Yolo():
             })
 
         post = urllib.urlencode(params)
-        sign = hmac.HMAC(str(self.secret), post, digestmod=hashlib.sha512).hexdigest()
+        sign = hmac.HMAC(
+            str(self.secret), post, digestmod=hashlib.sha512).hexdigest()
         headers = {"API-Key": str(self.key), "API-Hash": sign}
         raw = requests.post(endpoint, data=post, headers=headers)
 
@@ -35,12 +37,10 @@ class Yolo():
             raise BitapiException(raw.json())
         return raw.json()
 
-
     def get_cutoff(self):
         """Returns max profit for swaps """
         raw = requests.get("http://bitmarket.pl/json/swapBTC/swap.json")
         return raw.json()["cutoff"]
-
 
     def cancel_all(self):
         """Powerful: cancels all open swaps """
@@ -49,17 +49,17 @@ class Yolo():
         for swap in swap_list:
             self.bitapi("swapClose", id=swap["id"])
 
-
     def make_best(self):
         # Uses magic contant, remove later.
-        return self.bitapi('swapOpen', amount=(float(self.get_balance())-0.01), rate=float(self.get_cutoff()-5))
-
+        return self.bitapi(
+            'swapOpen',
+            amount=(float(self.get_balance())-0.01),
+            rate=float(self.get_cutoff()-5))
 
     def swap_list(self):
         """Listing all open offers with nice interface"""
         swap_list_data = self.bitapi("swapList")["data"]
         return swap_list_data
-
 
     def get_info(self):
         return self.bitapi('info')
