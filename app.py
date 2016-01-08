@@ -23,7 +23,7 @@ class Keys(db.Model):
     def __init__(self, public_key, private_key):
         self.public_key = public_key.encode('utf8')
         self.private_key = private_key.encode('utf8')
-        self.url = hashlib.sha256("{0.public_key}".format(self)).hexdigest()
+        self.url = hashlib.sha256("{0.public_key}{0.private_key}".format(self)).hexdigest()
 
     def __repr__(self):
         return "<Public:  {public} Prv: {private}, {url}>".format(
@@ -48,7 +48,7 @@ def handle():
             keys = Keys(request.form['pubkey'], request.form['privkey'])
             db.session.add(keys)
             db.session.commit()
-            hashed_key = hashlib.sha256("{public_key}{private_key}dupa".format(public_key=request.form['pubkey'], 
+            hashed_key = hashlib.sha256("{public_key}{private_key}".format(public_key=request.form['pubkey'], 
                 private_key=request.form['privkey'])).hexdigest()
             return render_template("generated.html", hashed_key=hashed_key)
         else:
