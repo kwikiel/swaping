@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 class Keys(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     public_key = db.Column(db.String(256), unique=False)
-    private_key = db.Column(db.String(256), unique=True)
+    private_key = db.Column(db.String(256), unique=False)
     url = db.Column(db.String(256), unique=True)
 
     def __init__(self, public_key, private_key):
@@ -46,12 +46,12 @@ def handle():
     if request.method == 'POST':
         if request.form['pubkey'] and request.form['privkey']:
             keys = Keys(request.form['pubkey'], request.form['privkey'])
-                db.rollback()
+            db.session.rollback()
             try:
                 db.session.add(keys)
                 db.session.commit()
             except IOError:
-                db.rollback()
+                db.session.rollback()
             hashed_key = hashlib.sha256("{public_key}{private_key}".format(public_key=request.form['pubkey'], 
                     private_key=request.form['privkey'])).hexdigest()
             return render_template("generated.html", hashed_key=hashed_key)
