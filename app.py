@@ -6,11 +6,15 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import hashlib
 # Library for bitmarket
 from swaper import Yolo
-# Make app instance
+# Make heroku happy and app secure
+import os
+import urlparse
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] =\
-    'postgres://zwnlkqhnfyaxnh:GFkT10cJtu6REr91W_Xlj7ePMF@ec2-107-22-170-249\
-.compute-1.amazonaws.com:5432/dfe8besv4oq9ol'
+
+urlparse.uses_netloc.append("postgres")
+url = urlparse.urlparse(os.environ["DATABASE_URL"])
+app.config['SQLALCHEMY_DATABASE_URI'] = url
 db = SQLAlchemy(app)
 
 
@@ -23,7 +27,9 @@ class Keys(db.Model):
     def __init__(self, public_key, private_key):
         self.public_key = public_key.encode('utf8')
         self.private_key = private_key.encode('utf8')
-        self.url = hashlib.sha256("{0.public_key}{0.private_key}".format(self)).hexdigest()
+        self.url = hashlib.sha256(
+            "{0.public_key}{0.private_key}".format(self)
+        ).hexdigest()
 
     def __repr__(self):
         return "<Public:  {public} Prv: {private}, {url}>".format(
@@ -52,7 +58,9 @@ def handle():
                 db.session.commit()
             except IOError:
                 db.session.rollback()
-            hashed_key = hashlib.sha256("{public_key}{private_key}".format(public_key=request.form['pubkey'], 
+            hashed_key = hashlib.sha256(
+                "{public_key}{private_key}".format(
+                    public_key=request.form['pubkey'],
                     private_key=request.form['privkey'])).hexdigest()
             return render_template("generated.html", hashed_key=hashed_key)
         else:
