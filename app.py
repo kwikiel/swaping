@@ -18,7 +18,7 @@ class Keys(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     public_key = db.Column(db.String(256), unique=False)
     private_key = db.Column(db.String(256), unique=False)
-    url = db.Column(db.String(256), unique=True)
+    url = db.Column(db.String(256), unique=False)
 
     def __init__(self, public_key, private_key):
         self.public_key = public_key.encode('utf8')
