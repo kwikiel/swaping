@@ -46,10 +46,14 @@ def handle():
     if request.method == 'POST':
         if request.form['pubkey'] and request.form['privkey']:
             keys = Keys(request.form['pubkey'], request.form['privkey'])
-            db.session.add(keys)
-            db.session.commit()
+                db.rollback()
+            try:
+                db.session.add(keys)
+                db.session.commit()
+            except IOError:
+                db.rollback()
             hashed_key = hashlib.sha256("{public_key}{private_key}".format(public_key=request.form['pubkey'], 
-                private_key=request.form['privkey'])).hexdigest()
+                    private_key=request.form['privkey'])).hexdigest()
             return render_template("generated.html", hashed_key=hashed_key)
         else:
             return "Something wrong with data"
