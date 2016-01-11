@@ -10,9 +10,9 @@ from swaper import Yolo
 
 app = Flask(__name__)
 
-# urlparse.uses_netloc.append("postgres")
-# url = urlparse.urlparse(os.environ["DATABASE_URL"])
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://zykkydexmgteid:DSkEPS3BA2NNIE7gcIAtUqyxUp@ec2-54-217-208-102.eu-west-1.compute.amazonaws.com:5432/d7tnudk85ms2kd"
+urlparse.uses_netloc.append("postgres")
+url = urlparse.urlparse(os.environ["DATABASE_URL"])
+app.config['SQLALCHEMY_DATABASE_URI'] = url
 db = SQLAlchemy(app)
 
 
@@ -106,4 +106,4 @@ def cookie_insertion():
     return response
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=21553,debug=True)
+    app.run(host='0.0.0.0', port=21553, debug=True)
