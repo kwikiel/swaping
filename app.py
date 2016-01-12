@@ -7,13 +7,10 @@ import hashlib
 # Library for bitmarket
 from swaper import Yolo
 # Make heroku happy and app secure
-from urlparse import urlparse
 import os
 app = Flask(__name__)
 
-urlparse.uses_netloc.append("postgres")
-url = urlparse.urlparse(os.environ["DATABASE_URL"])
-app.config['SQLALCHEMY_DATABASE_URI'] = url
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
 
 
