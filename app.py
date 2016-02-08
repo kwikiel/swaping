@@ -108,7 +108,7 @@ def cookie_insertion():
 
 @app.route("/test")
 def test():
-    render_template("test.html")
+    return render_template("test.html")
 
 
 if __name__ == '__main__':
