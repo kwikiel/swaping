@@ -32,6 +32,9 @@ class Keys(db.Model):
             public=self.public_key, private=self.private_key, url=self.url)
 
 
+class Rates(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
 # Basic route for index
 @app.route('/')
 def index():
@@ -102,6 +105,11 @@ def cookie_insertion():
     response = current_app.make_response(redirect_to_index)
     response.set_cookie('cookie_name', value='values')
     return response
+
+@app.route("/test")
+def test():
+    render_template("test.html")
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=21553, debug=True)
