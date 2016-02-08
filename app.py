@@ -8,10 +8,15 @@ import hashlib
 from swaper import Yolo
 # Make heroku happy and app secure
 import os
+import sys
+import logging
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
+
+app.logger(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 
 class Keys(db.Model):
@@ -36,6 +41,8 @@ class Rates(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
 # Basic route for index
+
+
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -105,6 +112,7 @@ def cookie_insertion():
     response = current_app.make_response(redirect_to_index)
     response.set_cookie('cookie_name', value='values')
     return response
+
 
 @app.route("/test")
 def test():
