@@ -118,6 +118,14 @@ def cookie_insertion():
 def test():
     return render_template("test.html")
 
+@app.route("/chart")
+def chart():
+    return render_template("chart.html")
+
+app.route("/data.csv")
+def data_feed():
+    return render_template("data.csv")
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=21553, debug=True)
