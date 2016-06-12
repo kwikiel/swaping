@@ -127,5 +127,3 @@ def data_feed():
     return render_template("data.csv")
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=21553, debug=True)
