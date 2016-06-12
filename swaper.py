@@ -54,7 +54,7 @@ class Yolo():
         return self.bitapi(
             'swapOpen',
             amount=(float(self.get_balance())-0.01),
-            rate=float(self.get_cutoff()-5))
+            rate=float(self.get_cutoff()-0.01))
 
     def swap_list(self):
         """Listing all open offers with nice interface"""
