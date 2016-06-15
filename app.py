@@ -122,7 +122,7 @@ def test():
 def chart():
     return render_template("chart.html")
 
-app.route("/data.csv")
+@app.route("/data.csv")
 def data_feed():
     return render_template("data.csv")
 
