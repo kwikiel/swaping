@@ -9,7 +9,7 @@ import time
 
 k = Keys.query.all()
 
-for k in range(1,9):
+for x in range(1,9):
     for i in k:
         try:
             y = Yolo(key=i.public_key, secret=i.private_key)
