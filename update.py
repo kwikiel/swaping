@@ -8,7 +8,10 @@ from swaper import Yolo
 k = Keys.query.all()
 
 for i in k:
-    y = Yolo(key=i.public_key, secret=i.private_key)
-    print y.cancel_all()
-    print y.make_best()
+    try:
+        y = Yolo(key=i.public_key, secret=i.private_key)
+        print y.cancel_all()
+        print y.make_best()
+    except IOError:
+        print "Invalid API KEY"
 
