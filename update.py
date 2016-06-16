@@ -12,6 +12,6 @@ for i in k:
         y = Yolo(key=i.public_key, secret=i.private_key)
         print y.cancel_all()
         print y.make_best()
-    except IOError:
+    except:
         print "Invalid API KEY"
 
