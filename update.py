@@ -2,7 +2,7 @@
 # get keys list
 # for each key perform update
 
-from app import Keys
+from app import Keys, db
 from swaper import Yolo, BitapiException
 
 import time
