@@ -51,10 +51,12 @@ class Yolo():
 
     def make_best(self):
         # Uses magic contant, remove later.
+        rclear = '%.4f' % float(self.get_cutoff())*0.98
+        print 'RATE: %s' % rclear
         return self.bitapi(
             'swapOpen',
-            amount=(float(self.get_balance())),
-            rate=float(self.get_cutoff()-0.02*self.get_cutoff()))
+            amount=float(self.get_balance()),
+            rate=rclear)
 
     def swap_list(self):
         """Listing all open offers with nice interface"""
