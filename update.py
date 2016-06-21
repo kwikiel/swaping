@@ -21,8 +21,7 @@ for i in k:
         print(e.args[0])
         if e.args[0]['errorMsg'] == 'Invalid API key':
             print "Key to be removed :_: "
-            kek = Keys.query.filter_by(private_key=i.private_key).delete()
-            db.session.add(kek)
+            Keys.query.filter_by(private_key=i.private_key).delete()
             db.session.commit()
     except Exception as e:
         logging.exception('wyjebalo sie xD')
