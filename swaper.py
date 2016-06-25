@@ -52,6 +52,8 @@ class Yolo():
     def make_best(self):
         # Uses magic contant, remove later.
         rclear = '%.4f' % float(self.get_cutoff()*0.95)
+        if self.get_balance()<0.01:
+            print "Nothing to do here. No money"
         print 'RATE: %s' % rclear
         return self.bitapi(
             'swapOpen',
