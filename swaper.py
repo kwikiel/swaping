@@ -54,11 +54,12 @@ class Yolo():
         rclear = '%.4f' % float(self.get_cutoff()*0.95)
         if self.get_balance()<0.01:
             print "Nothing to do here. No money"
-        print 'RATE: %s' % rclear
-        return self.bitapi(
-            'swapOpen',
-            amount=float(self.get_balance()),
-            rate=rclear)
+        else:
+            print 'RATE: %s' % rclear
+            return self.bitapi(
+               'swapOpen',
+               amount=float(self.get_balance()),
+               rate=rclear)
 
     def swap_list(self):
         """Listing all open offers with nice interface"""
