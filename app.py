@@ -21,7 +21,7 @@ app.logger.setLevel(logging.ERROR)
 
 class Keys(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    public_key = db.Column(db.String(256), unique=True)
+    public_key = db.Column(db.String(256), unique=False)
     private_key = db.Column(db.String(256), unique=True)
     url = db.Column(db.String(256), unique=True)
 
@@ -70,9 +70,9 @@ def handle():
                     private_key=request.form['privkey'])).hexdigest()
             return render_template("generated.html", hashed_key=hashed_key)
         else:
-            return "Something wrong with data"
+            return "Cannot add Key (duplicate or bad format)"
     else:
-        return "Go to login page again, sorry"
+        return "Try moving to homepage and adding new key"
 
 
 @app.route('/display/<special>')
