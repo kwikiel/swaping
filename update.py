@@ -24,5 +24,5 @@ for i in k:
             Keys.query.filter_by(private_key=i.private_key).delete()
             db.session.commit()
     except Exception as e:
-        logging.exception('wyjebalo sie xD')
+        logging.exception('General Exception')
         # print e
