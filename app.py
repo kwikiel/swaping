@@ -107,14 +107,6 @@ def create(special):
     return "Made best offer!"
 
 
-@app.route('/set_cookie')
-def cookie_insertion():
-    redirect_to_index = redirect('/')
-    response = current_app.make_response(redirect_to_index)
-    response.set_cookie('cookie_name', value='values')
-    return response
-
-
 @app.route("/test")
 def test():
     return render_template("test.html")
